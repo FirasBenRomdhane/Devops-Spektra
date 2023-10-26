@@ -2,13 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-		echo 'Pulling from github';
-		git branch: 'dhiaabdelli',
-		url: 'https://github.com/FirasBenRomdhane/Devops-Spektra'
-            }
-        }
 
         stage('Build and Test') {
             steps {
