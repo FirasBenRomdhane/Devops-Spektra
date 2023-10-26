@@ -3,10 +3,21 @@ pipeline {
 
     stages {
 
-        stage('Build and Test') {
+        stage('MAVEN CLEAN') {
             steps {
-                sh 'mvn -version'
+                sh 'mvn clean'
             }
         }
+        stage('MAVEN COMPILE') {
+            steps {
+                sh 'mvn compile'
+            }
+        }
+        stage('MAVEN SONARQUBE') {
+            steps {
+                sh 'mvn sonar:sonar'
+            }
+        }
+        
     }
 }
