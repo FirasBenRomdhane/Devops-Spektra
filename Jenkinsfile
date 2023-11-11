@@ -37,10 +37,23 @@ pipeline {
             
         stage('Building image'){
             steps {
-                    sh "docker build -t rima_ibri/achat:1.0.0 ."
+                    sh "docker build -t rimaibri/achat:1.0.0 ."
                             
             }
         }
+        
+        stage('Docker Push') {
+            steps {
+                    
+                    script {
+                        sh "docker login -u rimaibri -p docker2023/"
+
+                        sh "docker push rimaibri/achat:1.0.0"
+                    }
+                
+            }
+        }
+
         
     }
 }    
