@@ -1,6 +1,9 @@
 pipeline {
     agent any
     stages {
+        stage('Launching SonarQube'){
+            docker compose up -d sonarqube
+        }
         stage('Building') {
             steps {
                 sh 'mvn clean'
@@ -25,6 +28,12 @@ pipeline {
             steps {
                 sh 'mvn deploy'
             }
+        }
+        stage('Running Application'){
+            docker compose up -d app-achat mysqldb
+        }
+        stage('Running Monitoring services'){
+            docker compose up -d prometheus grafana
         }
     }
 }

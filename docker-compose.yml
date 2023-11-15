@@ -2,7 +2,6 @@ version: "3.8"
 
 services:
   jenkins:
-    container_name: jenkins
     networks:
       - achat_network
     build:
