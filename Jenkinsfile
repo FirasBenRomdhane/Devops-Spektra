@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Launching SonarQube') {
             steps {
-                docker compose up -d sonarqube
+                sh 'docker compose up -d sonarqube'
             }
         }
         stage('Building') {
@@ -33,12 +33,12 @@ pipeline {
         }
         stage('Running Application') {
             steps {
-                docker compose up -d app-achat mysqldb
+                sh 'docker compose up -d app-achat mysqldb'
             }
         }
         stage('Running Monitoring services') {
             steps {
-                docker compose up -d prometheus grafana
+                sh 'docker compose up -d prometheus grafana'
             }
         }
     }
