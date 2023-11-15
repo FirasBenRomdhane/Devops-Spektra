@@ -1,8 +1,10 @@
 pipeline {
     agent any
     stages {
-        stage('Launching SonarQube'){
-            docker compose up -d sonarqube
+        stage('Launching SonarQube') {
+            steps {
+                docker compose up -d sonarqube
+            }
         }
         stage('Building') {
             steps {
@@ -29,13 +31,15 @@ pipeline {
                 sh 'mvn deploy'
             }
         }
-        stage('Running Application'){
-            docker compose up -d app-achat mysqldb
+        stage('Running Application') {
+            steps {
+                docker compose up -d app-achat mysqldb
+            }
         }
-        stage('Running Monitoring services'){
-            docker compose up -d prometheus grafana
+        stage('Running Monitoring services') {
+            steps {
+                docker compose up -d prometheus grafana
+            }
         }
     }
 }
-    
-
