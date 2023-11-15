@@ -11,6 +11,7 @@
 	</parent>
 	<groupId>tn.esprit.rh</groupId>
 	<artifactId>achat</artifactId>
+	<packaging>jar</packaging>
 	<version>1.0</version>
 	<name>achat</name>
 	<description>Projet pour le module DevOps</description>
@@ -58,6 +59,7 @@
 
 	</dependencies>
 
+
 	<build>
 		<plugins>
 			<plugin>
@@ -78,7 +80,7 @@
 				<version>3.10.0.2594</version>
 			</plugin>
 		</plugins>
-
+	
 	</build>
 
 	<distributionManagement>

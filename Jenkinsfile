@@ -5,7 +5,7 @@ pipeline {
             steps {
                 sh 'mvn clean'
                 sh 'mvn compile'
-                sh 'mvn clean'
+                sh 'mvn package'
             }
         }
         stage('Code Quality check') {
