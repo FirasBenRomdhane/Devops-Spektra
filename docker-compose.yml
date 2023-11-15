@@ -2,6 +2,7 @@ version: "3.8"
 
 services:
   jenkins:
+    container_name: jenkins
     networks:
       - achat_network
     build:
@@ -14,7 +15,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/share/maven/conf/settings.xml:/usr/share/maven/conf/settings.xml
     user: root
-    container_name: jenkins
     environment:
       - JAVA_HOME=/usr/lib/jvm/default-java
       - JRE_HOME=/usr/lib/jvm/default-java
@@ -29,6 +29,7 @@ services:
     volumes:
       - db:/var/lib/mysql
   app-achat:
+    container_name: achat-app
     depends_on:
       - mysqldb
     image: dhiaabdelli/achat:1.0.0
@@ -39,6 +40,7 @@ services:
     stdin_open: true
     tty: true
   sonarqube:
+    container_name: sonarqube
     image: sonarqube
     ports:
       - 9000:9000
