@@ -1,0 +1,74 @@
+version: "3.8"
+
+services:
+  jenkins:
+    networks:
+      - achat_network
+    build:
+      context: .
+      dockerfile: Dockerfile.jenkins
+    ports:
+      - 8080:8080
+    volumes:
+      - /opt/jenkins_data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/share/maven/conf/settings.xml:/usr/share/maven/conf/settings.xml
+    user: root
+    container_name: jenkins
+    environment:
+      - JAVA_HOME=/usr/lib/jvm/default-java
+      - JRE_HOME=/usr/lib/jvm/default-java
+      - M2_HOME=/usr/share/maven
+  mysqldb:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_DATABASE= achatdb
+    ports:
+      - 3306:3306
+    volumes:
+      - db:/var/lib/mysql
+  app-achat:
+    depends_on:
+      - mysqldb
+    image: dhiaabdelli/achat:1.0.0
+    ports:
+      - 8089:8089
+    environment:
+      SPRING_APPLICATION_JSON: '{ "spring.datasource.url":"jdbc:mysql://mysqldb:3306/achatdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "spring.datasource.username":"root", "spring.datasource.password":null, "spring.jpa.hibernate.ddl-auto":"update", "spring.jpa.properties.hibernate.dialect":"org.hibernate.dialect.MySQL5InnoDBDialect"}'
+    stdin_open: true
+    tty: true
+  sonarqube:
+    image: sonarqube
+    ports:
+      - 9000:9000
+    networks:
+      - achat_network
+  nexus:
+    networks:
+      - achat_network
+    image: sonatype/nexus3
+    ports:
+      - 8081:8081
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+    networks:
+      - achat_network
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    networks:
+      - achat_network
+volumes:
+  jenkins_data:
+  db:
+
+
+networks:
+  achat_network:
