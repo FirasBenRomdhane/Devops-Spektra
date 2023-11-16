@@ -12,6 +12,7 @@ pipeline {
                 echo '[*] Starting Containers'
                 sh 'docker start sonarqube'
                 sh 'docker start nexus'
+                sleep(30)
             }
         }
 
