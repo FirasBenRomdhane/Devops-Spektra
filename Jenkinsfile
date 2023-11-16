@@ -44,5 +44,25 @@ pipeline {
                 sh 'mvn deploy'
             }
         }
+
+        stage('Build Docker Image') {
+            steps {
+                echo '[*] Building Docker Image'
+                sh "docker build -t abdessalemmami/achat-app:1.0.0 ."
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                echo '[*] Pushing Docker Image to Docker Hub'
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
+                        sh "docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD"
+                        sh "docker push abdessalemmami/achat-app:1.0.0"
+                    }
+                }
+            }
+        }
+
     }
 }
