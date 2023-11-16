@@ -72,4 +72,18 @@ pipeline {
         }
 
     }
+    
+    post {
+        success {
+            emailext subject: "Pipeline Success: ${currentBuild.fullDisplayName}",
+                      body: 'The pipeline completed successfully. No further action is required.',
+                      to: 'mami.abdessalem@gmail.com'
+        }
+
+        failure {
+            emailext subject: "Pipeline Failure: ${currentBuild.fullDisplayName}",
+                      body: 'The pipeline has failed. Please check the Jenkins logs for more information.',
+                      to: 'mami.abdessalem@gmail.com'
+        }
+    }
 }
