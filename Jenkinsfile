@@ -26,7 +26,7 @@ pipeline {
             steps {
                 echo '[*] Running SonarQube Analysis'
                 sh 'docker start sonarqube'
-                sleep 5
+                sleep 10
                 sh 'mvn sonar:sonar -Dsonar.login=squ_b45a8d05b375317a7950a487b3935e32ec9572da'
             }
         }
