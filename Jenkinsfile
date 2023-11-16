@@ -7,6 +7,14 @@ pipeline {
 
     stages {
 
+        stage('Initialize') {
+            steps {
+                echo '[*] Starting Containers'
+                sh 'docker start sonarqube'
+                sh 'docker start nexus'
+            }
+        }
+
         stage('Checkout Code') {
             steps {
                 echo '[*] Checking out code from Git'
@@ -25,8 +33,6 @@ pipeline {
         stage('SonarQube') {
             steps {
                 echo '[*] Running SonarQube Analysis'
-                sh 'docker start sonarqube'
-                sleep 10
                 sh 'mvn sonar:sonar -Dsonar.login=squ_b45a8d05b375317a7950a487b3935e32ec9572da'
             }
         }
