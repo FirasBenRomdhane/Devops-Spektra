@@ -71,8 +71,22 @@ pipeline {
             }
         }
 
+        stage('Prometheus'){
+            steps {
+                echo '[*] Running Prometheus'
+                sh 'docker start prometheus'
+            }
+        }
+
+        stage('Grafana'){
+            steps {
+                echo '[*] Running Grafana'
+                sh 'docker start grafana'
+            }
+        }
+
     }
-    
+
     post {
         success {
             emailext subject: "Pipeline Success: ${currentBuild.fullDisplayName}",
