@@ -1,23 +1,39 @@
-# Achat DevOps Project
+# Achat-App DevOps Pipeline
 
-## Pipeline Stages
+This repository contains the Jenkins pipeline for automating the build, test, and deployment processes of the Achat-App Backend using Jenkins, Maven, Docker, SonarQube, Nexus, and Docker Hub.
 
-### Git Checkout
-- Checkout the code from the git repository
+## Pipeline Overview
 
-### Compile and Build 
-- Compile the code
-- Build Maven package
+### Stage 1: Initialize
+- Start Docker containers for SonarQube and Nexus.
+- Sleep for 30 seconds to ensure containers are up.
 
-### SonarQube Scan
-- Run SonarQube scan on the code
+### Stage 2: Checkout Code
+- Clone the code from the [GitHub repository](https://github.com/FirasBenRomdhane/Devops-Spektra.git) with the specified branch (`abdessalem_mami`).
 
-### Build Docker Image
-- Build Docker image
-- Push Docker image to Docker Hub
+### Stage 3: Clean & Compile
+- Clean and compile the Maven project.
 
-### Deploy to Nexus
-Nexus is used as a repository manager where we can store our build artifacts. It is used to share artifacts between development teams and also to deploy artifacts. It is also used to manage the dependencies of various build artifacts.
+### Stage 4: SonarQube Analysis
+- Run SonarQube Code Analysis on the project.
 
-### Prometheus & Grafana
-- 
+### Stage 5: Deploy with Nexus
+- Deploy the project artifact to the Nexus repository.
+
+### Stage 6: Build Docker Image
+- Build a Docker image tagged as `abdessalemmami/achat-app:1.0.0`.
+
+### Stage 7: Push to Docker Hub
+- Log in to Docker Hub using credentials from Jenkins credentials.
+- Push the Docker image to Docker Hub.
+
+### Stage 8: Run App with Docker Compose
+- Start the application using Docker Compose.
+
+### Post-build Actions
+- **Success:**
+  - Send a success email notification with the build details.
+  
+- **Failure:**
+  - Send a failure email notification with the build details.
+
