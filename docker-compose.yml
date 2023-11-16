@@ -21,14 +21,14 @@ services:
   mysqldb:
     image: mysql:5.7
     environment:
-      - MYSQL_ROOT_PASSWORD=""
-      - MYSQL_DATABASE= achatdb
+       - MYSQL_ROOT_PASSWORD = "" 
+       - MYSQL_DATABASE =achatdb
     ports:
       - 3306:3306
     volumes:
       - db:/var/lib/mysql
+    
   app-achat:
-    container_name: achat-app
     depends_on:
       - mysqldb
     image: dhiaabdelli/achat:1.0.0
