@@ -30,6 +30,9 @@ This repository contains the Jenkins pipeline for automating the build, test, an
 ### Stage 8: Run App with Docker Compose
 - Start the application using Docker Compose.
 
+### Stage 9-10: Prometheus & Grafana
+- Start Prometheus and Grafana containers.
+
 ### Post-build Actions
 - **Success:**
   - Send a success email notification with the build details.
