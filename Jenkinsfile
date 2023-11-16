@@ -64,5 +64,12 @@ pipeline {
             }
         }
 
+        stage('Run App with Docker Compose') {
+            steps {
+                echo '[*] Running App with Docker Compose'
+                sh 'docker compose up -d'
+            }
+        }
+
     }
 }
