@@ -37,5 +37,12 @@ pipeline {
                 sh 'mvn sonar:sonar -Dsonar.login=squ_b45a8d05b375317a7950a487b3935e32ec9572da'
             }
         }
+
+        stage('Deploy with Nexus') {
+            steps {
+                echo '[*] Deploying Project Artifact to Nexus Repository'
+                sh 'mvn deploy'
+            }
+        }
     }
 }
