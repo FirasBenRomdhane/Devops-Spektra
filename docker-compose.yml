@@ -17,7 +17,7 @@ services:
   achat:
     depends_on:
       - mysqldb
-    image: jihedai/achat:1.0.0
+    image: jihedai/achat-app:1.0.0
     restart: on-failure
     ports:
       - 8082:8082
