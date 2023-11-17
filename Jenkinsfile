@@ -3,13 +3,13 @@ pipeline {
     stages {
         stage('Launching Sonarqube') {
             steps {
-                sh 'docker compose up -d sonarqube'
-                sleep(60)
+                //sh 'docker compose up -d sonarqube'
+                //sleep(60)
             }
         }
         stage('Launching Monitoring services') {
             steps {
-                sh 'docker compose up -d prometheus grafana'
+                //sh 'docker compose up -d prometheus grafana'
             }
         }
         stage('Building Project') {
@@ -36,12 +36,12 @@ pipeline {
 
         stage('NEXUS DEPLOY') {
             steps {
-                sh 'mvn deploy'
+                //sh 'mvn deploy'
             }
         }
         stage('Launching Project') {
             steps {
-                sh 'docker compose up -d app-achat mysqldb'
+                sh 'docker compose up -d app-achat'
             }
         }
     }
