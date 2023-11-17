@@ -4,14 +4,14 @@ pipeline {
         stage('Launching Sonarqube') {
             steps {
                 echo 'hola :)'
-            //sh 'docker compose up -d sonarqube'
-            //sleep(60)
+                sh 'docker compose up -d sonarqube'
+                sleep(60)
             }
         }
         stage('Launching Monitoring services') {
             steps {
                 echo 'hola :)'
-            //sh 'docker compose up -d prometheus grafana'
+                sh 'docker compose up -d prometheus grafana'
             }
         }
         stage('Building Project') {
@@ -19,20 +19,19 @@ pipeline {
                 sh 'mvn clean'
                 sh 'mvn compile'
                 sh 'mvn package'
-                echo "l"
+                echo 'l'
             }
         }
 
         stage('Code Quality check') {
             steps {
-                echo 'hola'
-            //sh "mvn sonar:sonar -Dsonar.login=${params.SONAR_LOGIN} -Dsonar.password=${SONAR_PWD} -Dsonar.host.url=http://localhost:9000"
-            //sh 'docker compose down sonarqube'
+                sh "mvn sonar:sonar -Dsonar.login=${params.SONAR_LOGIN} -Dsonar.password=${SONAR_PWD} -Dsonar.host.url=http://localhost:9000"
+                sh 'docker compose down sonarqube'
             }
         }
         stage('Building and pushing docker image') {
             steps {
-                echo "s"
+                echo 's'
                 sh "docker build -t ${params.DOCKERHUB_USERNAME}/${params.IMG_NAME}:${IMG_TAG} ."
                 sh "docker login -u ${params.DOCKERHUB_USERNAME} -p ${params.DOCKERHUB_PWD}"
                 sh "docker push ${params.DOCKERHUB_USERNAME}/${params.IMG_NAME}:${IMG_TAG}"
@@ -41,8 +40,7 @@ pipeline {
 
         stage('NEXUS DEPLOY') {
             steps {
-                echo 'hola :)'
-            //sh 'mvn deploy'
+                sh 'mvn deploy'
             }
         }
         stage('Launching Project') {
