@@ -1,31 +1,38 @@
-version: "3.7"
+version: "3.8"
+
 services:
-  # MySQL Database
-  mysql:
-    image: mysql
+  mysqldb:
+    image: mysql:5.7
+    restart: unless-stopped
     environment:
-      MYSQL_DATABASE: test
-      MYSQL_ROOT_PASSWORD: root
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_DATABASE=achatdb
     ports:
-      - "3306:3306"
+      - 3306:3306
+    volumes:
+      - db:/var/lib/mysql
     networks:
-      - mynetwork
-  
-  # Spring Boot Application
-  achat-app:
-    image: jihedai/achat-app
-    ports:
-      - "8083:8083"
-    environment:
-     SPRING_APPLICATION_JSON: '{"spring.datasource.url":"jdbc:mysql://mysqldb:3306/achatdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "spring.datasource.username":"root", "spring.datasource.password":null, "spring.jpa.hibernate.ddl-auto":"update", "spring.jpa.properties.hibernate.dialect":"org.hibernate.dialect.MySQL5InnoDBDialect"}'
+      - app_network
+      
+  achat:
     depends_on:
-      - mysql
+      - mysqldb
+    image: jihedai/achat:1.0.0
+    restart: on-failure
+    ports:
+      - 8082:8082
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url":"jdbc:mysql://mysqldb:3306/achatdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+        "spring.datasource.username":"root",
+        "spring.datasource.password":null,
+        "spring.jpa.hibernate.ddl-auto":"update",
+        "spring.jpa.properties.hibernate.dialect":"org.hibernate.dialect.MySQL5InnoDBDialect"}'
+    stdin_open: true
+    tty: true
     networks:
-      - mynetwork
-
-networks:
-  mynetwork:
-    driver: bridge
-
+      - app_network
 volumes:
-  mysql-data:
+  db:
+networks:
+  app_network:
