@@ -3,6 +3,7 @@ version: "3.8"
 services:
   mysqldb:
     image: mysql:5.7
+    restart: unless-stopped
     environment:
       - MYSQL_ROOT_PASSWORD=
       - MYSQL_DATABASE= achatdb
