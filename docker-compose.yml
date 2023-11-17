@@ -1,33 +1,15 @@
 version: "3.8"
 
 services:
-  jenkins:
-    networks:
-      - achat_network
-    build:
-      context: .
-      dockerfile: Dockerfile.jenkins
-    ports:
-      - 8080:8080
-    volumes:
-      - /opt/jenkins_data:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /usr/share/maven/conf/settings.xml:/usr/share/maven/conf/settings.xml
-    user: root
-    environment:
-      - JAVA_HOME=/usr/lib/jvm/default-java
-      - JRE_HOME=/usr/lib/jvm/default-java
-      - M2_HOME=/usr/share/maven
   mysqldb:
     image: mysql:5.7
     environment:
-       - MYSQL_ROOT_PASSWORD = "" 
-       - MYSQL_DATABASE =achatdb
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_DATABASE= achatdb
     ports:
       - 3306:3306
     volumes:
       - db:/var/lib/mysql
-    
   app-achat:
     depends_on:
       - mysqldb
@@ -39,7 +21,6 @@ services:
     stdin_open: true
     tty: true
   sonarqube:
-    container_name: sonarqube
     image: sonarqube
     ports:
       - 9000:9000
