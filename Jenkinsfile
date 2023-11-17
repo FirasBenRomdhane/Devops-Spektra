@@ -16,9 +16,9 @@ pipeline {
         }
         stage('Building Project') {
             steps {
-                //sh 'mvn clean'
-                //sh 'mvn compile'
-                //sh 'mvn package'
+                sh 'mvn clean'
+                sh 'mvn compile'
+                sh 'mvn package'
                 echo "l"
             }
         }
@@ -33,9 +33,9 @@ pipeline {
         stage('Building and pushing docker image') {
             steps {
                 echo "s"
-                //sh "docker build -t ${params.DOCKERHUB_USERNAME}/${params.IMG_NAME}:${IMG_TAG} ."
-                //sh "docker login -u ${params.DOCKERHUB_USERNAME} -p ${params.DOCKERHUB_PWD}"
-                //sh "docker push ${params.DOCKERHUB_USERNAME}/${params.IMG_NAME}:${IMG_TAG}"
+                sh "docker build -t ${params.DOCKERHUB_USERNAME}/${params.IMG_NAME}:${IMG_TAG} ."
+                sh "docker login -u ${params.DOCKERHUB_USERNAME} -p ${params.DOCKERHUB_PWD}"
+                sh "docker push ${params.DOCKERHUB_USERNAME}/${params.IMG_NAME}:${IMG_TAG}"
             }
         }
 
