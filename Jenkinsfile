@@ -45,6 +45,8 @@ pipeline {
         }
         stage('Launching Project') {
             steps {
+                sh 'docker compose up -d mysqldb'
+                sleep(10)
                 sh 'docker compose up -d app-achat'
             }
         }
