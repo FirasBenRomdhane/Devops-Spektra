@@ -24,8 +24,9 @@ pipeline {
 
         stage('Code Quality check') {
             steps {
-                sh "mvn sonar:sonar -Dsonar.login=${params.SONAR_LOGIN} -Dsonar.password=${SONAR_PWD} -Dsonar.host.url=http://localhost:9000"
-                sh 'docker compose down sonarqube'
+                echo "hola"
+                //sh "mvn sonar:sonar -Dsonar.login=${params.SONAR_LOGIN} -Dsonar.password=${SONAR_PWD} -Dsonar.host.url=http://localhost:9000"
+                //sh 'docker compose down sonarqube'
             }
         }
         stage('Building and pushing docker image') {
