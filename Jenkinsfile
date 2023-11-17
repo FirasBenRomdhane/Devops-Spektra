@@ -4,14 +4,14 @@ pipeline {
         stage('Launching Sonarqube') {
             steps {
                 echo 'hola :)'
-                //sh 'docker compose up -d sonarqube'
-                //sleep(60)
+            //sh 'docker compose up -d sonarqube'
+            //sleep(60)
             }
         }
         stage('Launching Monitoring services') {
             steps {
                 echo 'hola :)'
-                //sh 'docker compose up -d prometheus grafana'
+            //sh 'docker compose up -d prometheus grafana'
             }
         }
         stage('Building Project') {
@@ -24,9 +24,9 @@ pipeline {
 
         stage('Code Quality check') {
             steps {
-                echo "hola"
-                //sh "mvn sonar:sonar -Dsonar.login=${params.SONAR_LOGIN} -Dsonar.password=${SONAR_PWD} -Dsonar.host.url=http://localhost:9000"
-                //sh 'docker compose down sonarqube'
+                echo 'hola'
+            //sh "mvn sonar:sonar -Dsonar.login=${params.SONAR_LOGIN} -Dsonar.password=${SONAR_PWD} -Dsonar.host.url=http://localhost:9000"
+            //sh 'docker compose down sonarqube'
             }
         }
         stage('Building and pushing docker image') {
@@ -40,12 +40,12 @@ pipeline {
         stage('NEXUS DEPLOY') {
             steps {
                 echo 'hola :)'
-                //sh 'mvn deploy'
+            //sh 'mvn deploy'
             }
         }
         stage('Launching Project') {
             steps {
-                sh 'docker compose up -d app-achat mysqldb'
+                sh 'docker compose up -d app-achat'
             }
         }
     }
